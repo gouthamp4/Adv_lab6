@@ -18,16 +18,15 @@
           {% endif %}
        {% endwith %}
 
-   <div class="jumbotron jumbotron-fluid alert alert-info" style="margin-top: 5%">
-       <div class="container">
-           <h5>Here are the requirement's password didn't satisfy: </h5>
-       <ol>
-           {% for warning in warnings %}
-           <li>{{warning}}</li>
-           {% endfor %}
-       </ol>
-       <a class="btn btn-success" href="{{url_for('passwordSecCheck')}}">Re-try</a>
-       </div>
-   </div>
+    <div class="container">
+        <h5>Password does not meet the following conditions: </h5>
+        <ol>
+            {% for warning in warnings %}
+            <li>{{warning}}</li>
+            {% endfor %}
+        </ol>
+         <a class="btn btn-success" href="{{url_for('passwordSecCheck')}}">Re-try</a>
+    </div>
+
 </body>
 </html>

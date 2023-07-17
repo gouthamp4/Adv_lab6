@@ -3,9 +3,10 @@ from flask_wtf import FlaskForm
 from werkzeug.utils import redirect
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired
-import sqlite3
 
+# Configuring the applicationa and view
 app = Flask(__name__, template_folder='viewtemplates')
+# session key for security
 app.config["SECRET_KEY"] = "r51g3-duv4g"
 warnings = []
 
@@ -15,15 +16,15 @@ class PasswordCheckerForm(FlaskForm):
     field_password = PasswordField(validators=[InputRequired()])
     validate = SubmitField("Validate")
 
-
+# password conditions check
 def passwordValidate(password):
     del warnings[:]
     if not any(x.isupper() for x in password):
         warnings.append('Password missing Uppercase.')
     if not (password[-1].isdigit()):
         warnings.append('Password Should end with Number.')
-    if len(password) < 8:
-        warnings.append('password must be min 8 characters.')
+    if not any(x.islower() for x in password):
+        warnings.append('Password missing lowercase.')
     return warnings
 
 
