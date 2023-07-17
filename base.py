@@ -6,15 +6,8 @@ from wtforms.validators import InputRequired
 import sqlite3
 
 app = Flask(__name__, template_folder='viewtemplates')
-app.config["SECRET_KEY"] = "secret-key"
+app.config["SECRET_KEY"] = "r51g3-duv4g"
 warnings = []
-DB = "password_check.db"
-
-with sqlite3.connect(DB) as connection:
-    cursor = connection.cursor()
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)"
-    )
 
 
 class PasswordCheckerForm(FlaskForm):
@@ -56,12 +49,6 @@ def passwordSecCheck():
                 flash('Too Many attempts, Attempts %d of 5' % failed_attempts, 'error')
             return redirect(url_for("appReport"))
         failed_attempts = 0
-        with sqlite3.connect(DB) as connection:
-            cursor = connection.cursor()
-            cursor.execute(
-                "INSERT INTO users (username, password) VALUES (?, ?)",
-                (passwordCheckerForm.field_user.data, passwordCheckerForm.field_password.data),
-            )
         return render_template("success.html", userData= passwordCheckerForm.field_user.data)
     return render_template('password-check.html', form=passwordCheckerForm)
 
